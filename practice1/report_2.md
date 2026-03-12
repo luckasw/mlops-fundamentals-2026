@@ -35,3 +35,6 @@ a) I would monitor the input features and look out for data drift and retrain th
 b) I would keep and eye on the RMSE metric.
 
 c) Average prediction times and if these go too high compared to previous models i would rollback or retrain the model.
+
+
+[Link to repo](https://github.com/luckasw/mlops-fundamentals-2026)
