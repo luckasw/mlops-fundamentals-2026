@@ -3,3 +3,4 @@
 /rfr_model.pkl
 /clean_tripdata_v2.parquet
 /green_tripdata_v2.parquet
+/rfr_model_v2.pkl
