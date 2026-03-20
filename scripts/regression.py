@@ -1,21 +1,59 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import root_mean_squared_error, r2_score
+import logging
+import os
 import pickle
 import sys
-import os
+
+import pandas as pd
+import yaml
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score, root_mean_squared_error
+from sklearn.model_selection import train_test_split
+
+logger = logging.getLogger(__name__)
+
 
 def read_parquet(filename):
-   print(f"Reading data from {filename}...")
-   return pd.read_parquet(filename)
+    print(f"Reading data from {filename}...")
+    return pd.read_parquet(filename)
 
-def make_model(df):
+
+def load_params(params_path: str) -> dict:
+    """Load parameters from a YAML file."""
+    try:
+        with open(params_path, "r") as file:
+            params = yaml.safe_load(file)
+            logger.debug("Parameters retrieved from %s", params_path)
+            return params
+    except FileNotFoundError:
+        logger.error("File not found: %s", params_path)
+        raise
+    except yaml.YAMLError as e:
+        logger.error("YAML error: %s", e)
+        raise
+    except Exception as e:
+        logger.error("Unexpected error: %s", e)
+        raise
+
+
+def make_model(df, params):
     print("Creating model...")
-    X = df[["trip_distance", "pickup_hour", "trip_duration", "pickup_day_of_week"]]
+
+    max_features = params["feature_engineering"]["max_features"]
+
+    selected_features = df.columns[:max_features].tolist()
+    X = df[selected_features]
     y = df["total_amount"]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=11)
-    model = RandomForestRegressor(n_estimators=100, random_state=11)
+
+    test_size = params["data_ingestion"]["test_size"]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=params["model_building"]["random_state"]
+    )
+
+    model = RandomForestRegressor(
+        n_estimators=params["model_building"]["n_estimators"],
+        random_state=params["model_building"]["random_state"],
+    )
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
 
@@ -24,10 +62,12 @@ def make_model(df):
 
     return model, mse, r2
 
+
 def save_model(model, model_name):
     print(f"Saving model as {model_name}")
     with open(model_name, "wb") as f:
         pickle.dump(model, f)
+
 
 def main():
     if len(sys.argv) != 3:
@@ -40,11 +80,14 @@ def main():
     filename = os.path.join(script_dir, f"../data/{filename}")
     model_name = os.path.join(script_dir, f"../models/{model_name}")
 
+    params = load_params("params.yaml")
+
     df = read_parquet(filename)
-    model, mse, r2 = make_model(df)
+    model, mse, r2 = make_model(df, params)
     print(f"RMSE - {mse}\nR2 score - {r2}")
 
     save_model(model, model_name)
+
 
 if __name__ == "__main__":
     main()

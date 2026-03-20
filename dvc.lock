@@ -10,24 +10,24 @@ stages:
       size: 3828109
     - path: scripts/clean_data.py
       hash: md5
-      md5: a9f2a815ba532399ba81e1ad7d29b965
-      size: 1526
+      md5: 26eed0e3f94c026036ef48e64b98e21a
+      size: 1427
     outs:
     - path: data/clean_tripdata_v2.parquet
       hash: md5
-      md5: b444a7b4643019d7c83b0901ac6457bd
-      size: 3111909
+      md5: fc36781fa8643ddd94bb594fd3e4fb8a
+      size: 664973
   train:
     cmd: python scripts/regression.py clean_tripdata_v2.parquet rfr_model_v2.pkl
     deps:
     - path: data/clean_tripdata_v2.parquet
       hash: md5
-      md5: b444a7b4643019d7c83b0901ac6457bd
-      size: 3111909
+      md5: fc36781fa8643ddd94bb594fd3e4fb8a
+      size: 664973
     - path: scripts/regression.py
       hash: md5
-      md5: bfecdd7fe7c8d5cfe5a6d89e8011b793
-      size: 1539
+      md5: 3c9d0477d5186ffbd613375229fb1ea5
+      size: 2513
     outs:
     - path: models/rfr_model_v2.pkl
       hash: md5
