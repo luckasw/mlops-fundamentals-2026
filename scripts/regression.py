@@ -9,6 +9,8 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, root_mean_squared_error
 from sklearn.model_selection import train_test_split
 
+from dvclive import Live
+
 logger = logging.getLogger(__name__)
 
 
@@ -80,11 +82,16 @@ def main():
     filename = os.path.join(script_dir, f"../data/{filename}")
     model_name = os.path.join(script_dir, f"../models/{model_name}")
 
-    params = load_params("params.yaml")
+    params = load_params(os.path.join(script_dir, "../params.yaml"))
 
     df = read_parquet(filename)
     model, mse, r2 = make_model(df, params)
     print(f"RMSE - {mse}\nR2 score - {r2}")
+
+    with Live(save_dvc_exp=True) as live:
+        live.log_metric("rmse", mse)
+        live.log_metric("r2", r2)
+        live.log_params(params)
 
     save_model(model, model_name)
 

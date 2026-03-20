@@ -24,12 +24,16 @@ stages:
       hash: md5
       md5: fc36781fa8643ddd94bb594fd3e4fb8a
       size: 664973
+    - path: params.yaml
+      hash: md5
+      md5: 5d26071663317a8708c667324da6b294
+      size: 129
     - path: scripts/regression.py
       hash: md5
-      md5: 3c9d0477d5186ffbd613375229fb1ea5
-      size: 2513
+      md5: 1295847792424f1eeadcb026061db04e
+      size: 2714
     outs:
     - path: models/rfr_model_v2.pkl
       hash: md5
-      md5: f6b8bf51696ff6c4c68e49e961e94068
-      size: 891115160
+      md5: eb53ad4a181ac37176cf82fb1bebbfec
+      size: 1781951404

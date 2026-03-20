@@ -1,16 +1,25 @@
 stages:
   clean:
-    cmd: python scripts/clean_data.py green_tripdata_v2.parquet clean_tripdata_v2.parquet
+    cmd: python scripts/clean_data.py green_tripdata_v2.parquet 
+      clean_tripdata_v2.parquet
     deps:
-      - scripts/clean_data.py
-      - data/green_tripdata_v2.parquet
+    - scripts/clean_data.py
+    - data/green_tripdata_v2.parquet
     outs:
-      - data/clean_tripdata_v2.parquet
+    - data/clean_tripdata_v2.parquet
 
   train:
     cmd: python scripts/regression.py clean_tripdata_v2.parquet rfr_model_v2.pkl
     deps:
-      - scripts/regression.py
-      - data/clean_tripdata_v2.parquet
+    - scripts/regression.py
+    - data/clean_tripdata_v2.parquet
+    - params.yaml
     outs:
-      - models/rfr_model_v2.pkl
+    - models/rfr_model_v2.pkl
+params:
+- dvclive/params.yaml
+metrics:
+- dvclive/metrics.json
+plots:
+- dvclive/plots/metrics:
+    x: step
