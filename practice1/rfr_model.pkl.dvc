@@ -1,0 +1,5 @@
+outs:
+- md5: 34fb06418a1e4b5655388aa75d9b758f
+  size: 484118740
+  hash: md5
+  path: rfr_model.pkl

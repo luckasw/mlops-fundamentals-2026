@@ -1,0 +1,5 @@
+outs:
+- md5: 15899a718066101434247f17ecd7a232
+  size: 1677539
+  hash: md5
+  path: clean_tripdata.parquet

@@ -1,0 +1,6 @@
+/clean_tripdata.parquet
+/green_tripdata_2021-01.parquet
+/rfr_model.pkl
+/clean_tripdata_v2.parquet
+/green_tripdata_v2.parquet
+/rfr_model_v2.pkl
