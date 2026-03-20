@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "dvc>=3.66.1",
+    "dvc[s3]>=3.66.1",
     "dvc-gdrive>=3.0.1",
     "dvclive>=3.49.0",
     "jupyter>=1.1.1",
