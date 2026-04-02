@@ -5,12 +5,14 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "dvc>=3.66.1",
+    "dvc[s3]>=3.66.1",
     "dvc-gdrive>=3.0.1",
+    "dvclive>=3.49.0",
     "jupyter>=1.1.1",
     "matplotlib>=3.10.8",
     "numpy>=2.4.2",
     "pandas>=3.0.1",
     "pyarrow>=23.0.1",
     "scikit-learn>=1.8.0",
+    "mlflow>=1.27.0",
 ]

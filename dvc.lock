@@ -1,0 +1,39 @@
+schema: '2.0'
+stages:
+  clean:
+    cmd: python scripts/clean_data.py green_tripdata_v2.parquet 
+      clean_tripdata_v2.parquet
+    deps:
+    - path: data/green_tripdata_v2.parquet
+      hash: md5
+      md5: c8c1cef2b09fe78c587fbcacb8ee85d9
+      size: 3828109
+    - path: scripts/clean_data.py
+      hash: md5
+      md5: 26eed0e3f94c026036ef48e64b98e21a
+      size: 1427
+    outs:
+    - path: data/clean_tripdata_v2.parquet
+      hash: md5
+      md5: fc36781fa8643ddd94bb594fd3e4fb8a
+      size: 664973
+  train:
+    cmd: python scripts/regression.py clean_tripdata_v2.parquet rfr_model_v2.pkl
+    deps:
+    - path: data/clean_tripdata_v2.parquet
+      hash: md5
+      md5: fc36781fa8643ddd94bb594fd3e4fb8a
+      size: 664973
+    - path: params.yaml
+      hash: md5
+      md5: e68e9ac8416c7f0316dec452fcc35563
+      size: 152
+    - path: scripts/regression.py
+      hash: md5
+      md5: 41e964818cecd7ccdce297cd1687e747
+      size: 3145
+    outs:
+    - path: models/rfr_model_v2.pkl
+      hash: md5
+      md5: ed181fa3f7bae747175b48c8a5a99cf8
+      size: 3087280619
